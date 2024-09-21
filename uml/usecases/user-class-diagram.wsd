@@ -1,0 +1,17 @@
+@startuml Class User Diagram
+
+entity User
+
+User : uuid id
+User : string name
+User : string email
+User : hash password
+User : date created_at
+
+User : create()
+User : read()
+User : list()
+User : update()
+User : delete()
+
+@enduml

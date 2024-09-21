@@ -1,0 +1,10 @@
+@startuml User usecases
+
+:Admin: -> (List all users)
+:Admin: -> (Delete user)
+
+:User: -> (Create account)
+:User: -> (Update account)
+:User: -> (Delete account)
+
+@enduml
