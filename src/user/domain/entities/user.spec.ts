@@ -1,9 +1,8 @@
 import { User, UserProperties } from "./user";
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
-import { omit } from "lodash";
+import { first, omit } from "lodash";
 
 describe("Content Unit Tests", () => {
-
   const props = {
     firstName: "Johnny",
     lastName: "Bravo",
@@ -41,13 +40,19 @@ describe("Content Unit Tests", () => {
     });
   });
 
-
-  test("getter of each non optional prop", () => {
+  test("getter and setter of each non optional prop", () => {
+    const propsDatas: { prop: 'firstName' | 'lastName' | 'email' | 'password'; firstValue: string; newValue: string }[] = [
+      { prop: 'firstName', firstValue: 'Johnny', newValue: 'Billy' },
+      { prop: 'lastName', firstValue: 'Bravo', newValue: 'William' },
+      { prop: 'email', firstValue: 'johnny.bravo@turner.com', newValue: 'billy@turner.com' },
+      { prop: 'password', firstValue: 'iampretty', newValue: 'password' }
+    ]
     const user = new User(props);
-    expect(user.firstName).toBe("Johnny");
-    expect(user.lastName).toBe("Bravo");
-    expect(user.email).toBe("johnny.bravo@turner.com");
-    expect(user.password).toBe("iampretty");
+    propsDatas.forEach(propData => {
+      expect(user[propData.prop]).toBe(propData.firstValue);
+      user[propData.prop] = propData.newValue
+      expect(user[propData.prop]).toBe(propData.newValue)
+    })
   });
 
   test("getter of created_at prop", () => {
