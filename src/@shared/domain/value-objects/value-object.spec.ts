@@ -14,35 +14,21 @@ describe("ValueObject Tests Unit", () => {
   it("should be immutable", () => {
     let stubVo = new StubValueObject("string value");
     expect(() => {
-      // @ts-expect-error(2445,2540)
-      stubVo._value = "it changed"
-    }).toThrow(TypeError)
-    expect(stubVo.value).toBe("string value")
+      (stubVo as any)._value = "it changed"
+    }).toThrow("Cannot assign to read only property '_value' of object '#<StubValueObject>'")
+    expect(() => {
+      (stubVo as any)["_value"] = "it changed"
+    }).toThrow("Cannot assign to read only property '_value' of object '#<StubValueObject>'")
 
-    stubVo = new StubValueObject("string value");
+    stubVo = new StubValueObject({ prop1: "prop1 value", nested: { prop2: "prop2 value", prop3: new Date } });
     expect(() => {
-      // @ts-expect-error(2540)
-      stubVo["_value"] = "it changed"
-    }).toThrow(TypeError)
-    expect((stubVo.value)).toBe("string value")
-    
-    stubVo = new StubValueObject({ prop1: "prop1 value" });
-    expect(() => {
-      // @ts-expect-error(2540)
-      stubVo["_value"] = "it changed"
-    })
-    expect(stubVo.value).toStrictEqual({ prop1: "prop1 value" })
+      stubVo.value.prop1 = "it changed"
+    }).toThrow("Cannot assign to read only property 'prop1' of object '#<Object>'")
 
-    stubVo = new StubValueObject({ prop1: "prop1 value" });
     expect(() => {
-      stubVo["_value"].prop1 = "it changed"
-    }).toThrow(TypeError)
-    expect(stubVo.value.prop1).toStrictEqual("prop1 value")
+      stubVo.value.nested.prop2 = "it changed"
+    }).toThrow("Cannot assign to read only property 'prop2' of object '#<Object>'")
 
-    stubVo = new StubValueObject({ prop1: { prop2: "prop2 value"} });
-    expect(() => {
-      stubVo["_value"].prop1.prop2 = "it changed"
-    }).toThrow(TypeError)
-    expect(stubVo.value.prop1.prop2).toBe("prop2 value")
+    expect(stubVo.value.nested.prop3).toBeInstanceOf(Date)
   })
 })
