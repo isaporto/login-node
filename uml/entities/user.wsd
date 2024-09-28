@@ -3,7 +3,8 @@
 entity User
 
 User : uuid id
-User : string name
+User : string first_name
+User : string last_name
 User : string email
 User : hash password
 User : date created_at
