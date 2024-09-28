@@ -46,4 +46,17 @@ export class User extends Entity<UserProperties> {
   get created_at(): Date {
     return this.props.created_at;
   }
+
+  update(firstName: string, lastName: string): void {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  updateEmail(email: string): void {
+    this.email = email;
+  }
+
+  updatePassword(password: string): void {
+    this.password = password;
+  }
 }

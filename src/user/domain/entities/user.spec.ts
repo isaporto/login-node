@@ -2,7 +2,7 @@ import { User, UserProperties } from "./user";
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import { first, omit } from "lodash";
 
-describe("Content Unit Tests", () => {
+describe("User Unit Tests", () => {
   const props = {
     firstName: "Johnny",
     lastName: "Bravo",
@@ -66,4 +66,23 @@ describe("Content Unit Tests", () => {
     user = new User(props);
     expect(user.created_at).toBeInstanceOf(Date);
   });
+
+  it("should update a user name", () => {
+    const user = new User(props);
+    user.update("Eddy", "Skipper");
+    expect(user.firstName).toBe("Eddy")
+    expect(user.lastName).toBe("Skipper")
+  })
+
+  it("should update a user email", () => {
+    const user = new User(props);
+    user.updateEmail("johnny.handsome@turner.com");
+    expect(user.email).toBe("johnny.handsome@turner.com");
+  })
+
+  it("should update a user password", () => {
+    const user = new User(props);
+    user.updatePassword("iamhandsome");
+    expect(user.password).toBe("iamhandsome");
+  })
 });
