@@ -5,7 +5,7 @@ export abstract class ValueObject<Value = any> {
 
   constructor(value: Value) {
     this._value = deepFreeze(value);
-    Object.freeze(this);
+    Object.defineProperty(this, "_value", { configurable: false, writable: false });
   }
 
   get value() {
