@@ -56,9 +56,9 @@ describe("PropertyValidator Unit Test", () => {
   });
 
   test("string validation", () => {
-    const property = "joão";
+    const property = "name";
     const errorMessage = `The ${property} field must be a string`;
-    const invalidValuesArrange = [null, undefined, 0, true, {}, []];
+    const invalidValuesArrange = [0, true, {}, []];
     invalidValuesArrange.forEach((invalidValue) => {
       assertIsInvalid({
         value: invalidValue,
@@ -68,9 +68,47 @@ describe("PropertyValidator Unit Test", () => {
       });
     });
 
-    const validValuesArrange = ["test value", ""];
+    const validValuesArrange = ["test value", "", null, undefined];
     validValuesArrange.forEach((validValue) => {
       assertIsValid({ value: validValue, property, rule: "string" });
+    });
+  });
+
+  test("boolean validation", () => {
+    const property = "name";
+    const errorMessage = `The ${property} field must be a boolean`;
+    const invalidValuesArrange = [0, 'true', 'false', {}, []];
+    invalidValuesArrange.forEach((invalidValue) => {
+      assertIsInvalid({
+        value: invalidValue,
+        property,
+        rule: "boolean",
+        error: new ValidationError(errorMessage),
+      });
+    });
+
+    const validValuesArrange = [true, false, null, undefined];
+    validValuesArrange.forEach((validValue) => {
+      assertIsValid({ value: validValue, property, rule: "boolean" });
+    });
+  });
+
+  test("number validation", () => {
+    const property = "name";
+    const errorMessage = `The ${property} field must be a number`;
+    const invalidValuesArrange = ["text", true, {}, []];
+    invalidValuesArrange.forEach((invalidValue) => {
+      assertIsInvalid({
+        value: invalidValue,
+        property,
+        rule: "number",
+        error: new ValidationError(errorMessage),
+      });
+    });
+
+    const validValuesArrange = [1, 2, 1.5, 0];
+    validValuesArrange.forEach((validValue) => {
+      assertIsValid({ value: validValue, property, rule: "number" });
     });
   });
 
@@ -87,7 +125,7 @@ describe("PropertyValidator Unit Test", () => {
       });
     });
 
-    const validValuesArrange = ["a@a.com", "test+1@email.com"];
+    const validValuesArrange = ["a@a.com", "test+1@email.com", null, undefined];
     validValuesArrange.forEach((validValue) => {
       assertIsValid({ value: validValue, property, rule: "isEmail" });
     });
@@ -105,7 +143,7 @@ describe("PropertyValidator Unit Test", () => {
       params: [maxLength]
     });
 
-    const validValuesArrange = ["bamboozled", "", "a"];
+    const validValuesArrange = ["bamboozled", "", "a", null, undefined];
     validValuesArrange.forEach((validValue) => {
       assertIsValid({ value: validValue, property, rule: "maxLength", params: [maxLength] });
     });
@@ -140,7 +178,7 @@ describe("PropertyValidator Unit Test", () => {
     expect(() => validator.required().string()).toThrow(new ValidationError(`The fruit field must be a string`));
 
     validator = PropertyValidator.values("banana", 'fruit');
-    expect(() => validator.required().string().inclusion(["apple", "pear"])).toThrow(new ValidationError(`This value is not valid fruit`));
+    expect(() => validator.required().string().inclusion(["apple", "pear"])).toThrow(new ValidationError(`This value is not a valid fruit`));
   })
 
   it('should be valid when combine two or more rules', () => {

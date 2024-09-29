@@ -18,21 +18,35 @@ export default class PropertyValidator {
   }
 
   string(): this{
-    if (typeof this.value !== 'string') {
+    if (!isEmpty(this.value) && typeof this.value !== 'string') {
       throw new ValidationError(`The ${this.property} field must be a string`);
     };
     return this;
   }
 
+  boolean(): this{
+    if (!isEmpty(this.value) && typeof this.value !== 'boolean') {
+      throw new ValidationError(`The ${this.property} field must be a boolean`);
+    };
+    return this;
+  }
+
+  number(): this{
+    if (!isEmpty(this.value) && typeof this.value !== 'number') {
+      throw new ValidationError(`The ${this.property} field must be a number`);
+    };
+    return this;
+  }
+
   isEmail(): this {
-    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(this.value)) {
+    if (!isEmpty(this.value) && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(this.value)) {
       throw new ValidationError(`The ${this.property} field must have a valid email format`);
     }
     return this
   }
 
   maxLength(max: number) {
-    if (this.value.length > max) {
+    if (!isEmpty(this.value) && this.value.length > max) {
       throw new ValidationError(`The ${this.property} must be less or equal than ${max} characters`)
     }
     return this;
@@ -44,4 +58,8 @@ export default class PropertyValidator {
     }
     return this;
   }
+}
+
+export function isEmpty(value: any) {
+  return value === undefined || value === null;
 }
