@@ -1,5 +1,6 @@
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import Entity from "../../../@shared/domain/entities/entity";
+import PropertyValidator from "../../../@shared/validators/property-validator";
 
 export type UserProperties = {
   firstName: string;
@@ -11,6 +12,7 @@ export type UserProperties = {
 
 export class User extends Entity<UserProperties> {
   constructor(public readonly props: UserProperties, id?: UniqueEntityId) {
+    User.validate(props)
     super(props, id);
     this.props.created_at = this.props.created_at ?? new Date();
   }
@@ -48,15 +50,40 @@ export class User extends Entity<UserProperties> {
   }
 
   update(firstName: string, lastName: string): void {
+    User.validateName({
+      firstName,
+      lastName
+    })
     this.firstName = firstName;
     this.lastName = lastName;
   }
 
   updateEmail(email: string): void {
+    User.validateEmail({ email })
     this.email = email;
   }
 
   updatePassword(password: string): void {
+    User.validatePassword({ password })
     this.password = password;
+  }
+
+  static validate(props: Omit<UserProperties, "created_at">) {
+    User.validateName(props);
+    User.validateEmail(props);
+    User.validatePassword(props);
+  }
+
+  static validateName(props: Pick<UserProperties, "firstName" | "lastName">) {
+    PropertyValidator.values(props.firstName, "firstName").required().string();
+    PropertyValidator.values(props.lastName, "lastName").required().string();
+  }
+
+  static validateEmail(props: Pick<UserProperties, "email">) {
+    PropertyValidator.values(props.email, "email").required().string().isEmail();
+  }
+
+  static validatePassword(props: Pick<UserProperties, "password">) {
+    PropertyValidator.values(props.password, "password").required().string().maxLength(64);
   }
 }

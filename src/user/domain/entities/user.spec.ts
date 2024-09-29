@@ -10,10 +10,15 @@ describe("User Unit Tests", () => {
     password: "iampretty"
   }
 
+  beforeEach(() => {
+    User.validate = jest.fn();
+  })
+
   test("Constructor of User", () => {
     let user = new User(props);
     const propsDateOmitted = omit(user.props, "created_at");
 
+    expect(User.validate).toHaveBeenCalledTimes(1);
     expect(propsDateOmitted).toStrictEqual({
       firstName: "Johnny",
       lastName: "Bravo",
@@ -68,21 +73,33 @@ describe("User Unit Tests", () => {
   });
 
   it("should update a user name", () => {
+    User.validateName = jest.fn();
     const user = new User(props);
+    expect(User.validate).toHaveBeenCalledTimes(1);
+
     user.update("Eddy", "Skipper");
+    expect(User.validateName).toHaveBeenCalledTimes(1);
     expect(user.firstName).toBe("Eddy")
     expect(user.lastName).toBe("Skipper")
   })
 
   it("should update a user email", () => {
+    User.validateEmail = jest.fn();
     const user = new User(props);
+    expect(User.validate).toHaveBeenCalledTimes(1);
+
     user.updateEmail("johnny.handsome@turner.com");
+    expect(User.validateEmail).toHaveBeenCalledTimes(1);
     expect(user.email).toBe("johnny.handsome@turner.com");
   })
 
   it("should update a user password", () => {
+    User.validatePassword = jest.fn();
     const user = new User(props);
+    expect(User.validate).toHaveBeenCalledTimes(1);
+
     user.updatePassword("iamhandsome");
+    expect(User.validatePassword).toHaveBeenCalledTimes(1);
     expect(user.password).toBe("iamhandsome");
   })
 });
