@@ -1,7 +1,7 @@
 import { validateSync } from "class-validator";
 import ValidatorFieldsInterface, { FieldsErrors } from "./validator-fields-interface";
 
-export default class ValidatorFields<ValidatedProps> implements ValidatorFieldsInterface<ValidatedProps> {
+export default abstract class ValidatorFields<ValidatedProps> implements ValidatorFieldsInterface<ValidatedProps> {
   errors: FieldsErrors;
   validatedData: ValidatedProps;
 
@@ -17,6 +17,6 @@ export default class ValidatorFields<ValidatedProps> implements ValidatorFieldsI
     } else {
       this.validatedData = data
     }
-    return ! errors.length
+    return !errors.length
   }
 }
