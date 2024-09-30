@@ -1,6 +1,6 @@
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import Entity from "../../../@shared/domain/entities/entity";
-import PropertyValidator from "../../../@shared/validators/property-validator";
+import PropertyValidator from "../../../@shared/domain/validators/property-validator";
 import UserValidatorFactory from "../validators/user.validator";
 
 export type UserProperties = {

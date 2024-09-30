@@ -1,9 +1,9 @@
-import ValidationError from "../../@shared/errors/validation.error";
+import ValidationError from "../errors/validation.error";
 
 export default class PropertyValidator {
   private constructor(
-    private value: any,
-    private property: string
+    readonly value: any,
+    readonly property: string
   ) {}
 
   static values(value: any, property: string) {

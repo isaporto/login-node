@@ -1,5 +1,5 @@
-import { IsDate, IsEmail, IsNotEmpty, IsString, MaxLength } from "class-validator";
-import ValidatorFields from "../../../@shared/validators/validator-fields";
+import { IsDate, IsEmail, IsNotEmpty, IsString, Length, MaxLength, MinLength } from "class-validator";
+import ValidatorFields from "../../../@shared/domain/validators/validator-fields";
 import { UserProperties } from "../entities/user";
 
 export class UserRules {
@@ -17,6 +17,7 @@ export class UserRules {
   email: string;
 
   @MaxLength(64)
+  @MinLength(8)
   @IsString()
   @IsNotEmpty()
   password: string;
@@ -31,7 +32,7 @@ export class UserRules {
 
 export class UserValidator extends ValidatorFields<UserRules> {
   validate(data: UserProperties): boolean {
-    return super.validate(new UserRules(data))
+    return super.validate(new UserRules(data ?? {}))
   }
 
   validateName(data: Pick<UserProperties, "firstName" | "lastName">) {

@@ -1,4 +1,4 @@
-import ValidationError from "../../../@shared/errors/validation.error";
+import ValidationError from "../../errors/validation.error";
 import PropertyValidator from "../property-validator";
 
 type ExpectedRules = {
