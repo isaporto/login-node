@@ -1,6 +1,7 @@
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import UserValidatorFactory from "../validators/user.validator";
 import Entity from "../../../@shared/domain/entities/entity";
+import EntityValidationError from "../../../@shared/domain/errors/validation.error";
 
 export type UserProperties = {
   firstName: string;
@@ -70,21 +71,25 @@ export class User extends Entity<UserProperties> {
 
   static validate(props: UserProperties) {
     const validator = UserValidatorFactory.create();
-    validator.validate(props);
+    const isValid = validator.validate(props);
+    if (!isValid) throw new EntityValidationError(validator.errors)
   }
 
   static validateName(props: Pick<UserProperties, "firstName" | "lastName">) {
     const validator = UserValidatorFactory.create();
-    validator.validateName(props);
+    const isValid = validator.validateName(props);
+    if (!isValid) throw new EntityValidationError(validator.errors)
   }
 
   static validateEmail(props: Pick<UserProperties, "email">) {
     const validator = UserValidatorFactory.create();
-    validator.validateEmail(props);
+    const isValid = validator.validateEmail(props);
+    if (!isValid) throw new EntityValidationError(validator.errors)
   }
 
   static validatePassword(props: Pick<UserProperties, "password">) {
     const validator = UserValidatorFactory.create();
-    validator.validatePassword(props);
+    const isValid = validator.validatePassword(props);
+    if (!isValid) throw new EntityValidationError(validator.errors)
   }
 }

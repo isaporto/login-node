@@ -1,6 +1,6 @@
 import { User, UserProperties } from "./user";
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
-import { first, omit } from "lodash";
+import { omit } from "lodash";
 
 describe("User Unit Tests", () => {
   const props = {

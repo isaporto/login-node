@@ -1,6 +1,8 @@
-export default class ValidationError extends Error {
-  constructor(message?: string) {
-    super(message || "This field is invalid");
-    this.name = "Invalid field";
+import { FieldsErrors } from "../validators/validator-fields-interface";
+
+export default class EntityValidationError extends Error {
+  constructor(public error: FieldsErrors) {
+    super('Entity Validation Error');
+    this.name = "EntityValidationError";
   }
 }

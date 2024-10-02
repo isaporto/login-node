@@ -1,12 +1,12 @@
-import { validateSync } from "class-validator";
+import { validateSync, ValidatorOptions } from "class-validator";
 import ValidatorFieldsInterface, { FieldsErrors } from "./validator-fields-interface";
 
 export default abstract class ValidatorFields<ValidatedProps> implements ValidatorFieldsInterface<ValidatedProps> {
   errors: FieldsErrors = null;
   validatedData: ValidatedProps = null;
 
-  validate(data: any): boolean {
-    const errors = validateSync(data)
+  validate(data: any, validatorOptions?: ValidatorOptions): boolean {
+    const errors = validateSync(data, validatorOptions)
 
     if (errors.length > 0) {
       this.errors = {}
