@@ -1,6 +1,6 @@
 services:
   app:
     build: .
-    container_name: login-typescript-app
+    container_name: maxbear-typescript-app
     volumes:
       - .:/home/node/app
