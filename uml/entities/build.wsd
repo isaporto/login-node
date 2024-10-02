@@ -1,0 +1,18 @@
+@startuml Class Build Diagram
+
+entity Build
+
+Build : uuid id
+Build : string name
+Build : string model
+Build : string building_type
+Build : reference EnergyCompany
+Build : date created_at
+
+Build : create()
+Build : read()
+Build : list()
+Build : update()
+Build : delete()
+
+@enduml

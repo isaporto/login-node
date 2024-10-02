@@ -1,0 +1,8 @@
+@startuml EnergyCompany usecases
+
+:Admin: -> (List all its EnergyCompanies)
+:Admin: -> (Delete EnergyCompany)
+:Admin: -> (Create new EnergyCompany)
+:Admin: -> (Update EnergyCompany)
+
+@enduml

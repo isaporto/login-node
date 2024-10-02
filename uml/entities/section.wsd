@@ -1,0 +1,20 @@
+@startuml Class Section Diagram
+
+entity Section
+
+Section : uuid id
+Section : string from
+Section : string to
+Section : number distance
+Section : number current
+Section : number thermic_current
+Section : reference Build
+Section : date created_at
+
+Section : create()
+Section : read()
+Section : list()
+Section : update()
+Section : delete()
+
+@enduml

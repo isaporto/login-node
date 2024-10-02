@@ -1,0 +1,8 @@
+@startuml Section usecases
+
+:User: -> (List all its Sections by Build)
+:User: -> (Delete its Section)
+:User: -> (Create new Section from Build)
+:User: -> (Update its Section)
+
+@enduml

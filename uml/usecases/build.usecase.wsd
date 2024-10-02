@@ -1,0 +1,9 @@
+@startuml Build usecases
+
+:User: -> (List all its Builds)
+:User: -> (List its Builds)
+:User: -> (Delete its Build)
+:User: -> (Create new Build)
+:User: -> (Update its Build)
+
+@enduml

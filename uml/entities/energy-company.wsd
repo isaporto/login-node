@@ -1,0 +1,17 @@
+@startuml Class EnergyCompany Diagram
+
+entity EnergyCompany
+
+EnergyCompany : uuid id
+EnergyCompany : string name
+EnergyCompany : number nominal_voltage
+EnergyCompany : number residential_percent
+EnergyCompany : number commercial_percent
+
+EnergyCompany : create()
+EnergyCompany : read()
+EnergyCompany : list()
+EnergyCompany : update()
+EnergyCompany : delete()
+
+@enduml
