@@ -1,5 +1,5 @@
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
-import Entity from "@shared/domain/entities/entity";
+import Entity from "../../../@shared/domain/entities/entity";
 import { BuildingType, Model } from "../../../@shared/domain/types";
 import BuildValidatorFactory from "../validators/build.validator";
 import EntityValidationError from "../../../@shared/domain/errors/validation.error";

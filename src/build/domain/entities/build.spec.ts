@@ -11,15 +11,15 @@ describe("Build Unit Tests", () => {
     energy_company_id: energyCompanyId
   }
 
-  // beforeEach(() => {
-  //   Build.validate = jest.fn();
-  // })
+  beforeEach(() => {
+    Build.validate = jest.fn();
+  })
 
   test("Constructor of Build", () => {
     let build = new Build(props);
     const propsDateOmitted = omit(build.props, "created_at");
 
-    // expect(Build.validate).toHaveBeenCalledTimes(1);
+    expect(Build.validate).toHaveBeenCalledTimes(1);
     expect(propsDateOmitted).toStrictEqual({
       name: "Build project",
       model: "FMAX",

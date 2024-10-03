@@ -9,14 +9,14 @@ describe("EnergyCompany Unit Tests", () => {
     commercial_percent: 3
   }
 
-  // beforeEach(() => {
-  //   EnergyCompany.validate = jest.fn();
-  // })
+  beforeEach(() => {
+    EnergyCompany.validate = jest.fn();
+  })
 
   test("Constructor of EnergyCompany", () => {
     let energyCompany = new EnergyCompany(props);
 
-    // expect(EnergyCompany.validate).toHaveBeenCalledTimes(1);
+    expect(EnergyCompany.validate).toHaveBeenCalledTimes(1);
     expect(energyCompany.props).toStrictEqual({
       name: "Eletropaulo",
       nominal_voltage: 1,
