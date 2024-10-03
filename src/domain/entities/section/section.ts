@@ -1,0 +1,57 @@
+import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
+import Entity from "../../../@shared/domain/entities/entity";
+
+export type SectionProperties = {
+  order: number;
+  from: string;
+  to: string;
+  distance: number;
+  current: number;
+  thermic_current: number;
+  build_id: UniqueEntityId;
+}
+
+export class Section extends Entity<SectionProperties> {
+  constructor(public readonly props: SectionProperties, id: UniqueEntityId) {
+    super(props, id);
+  }
+
+  get from(): string {
+    return this.props.from;
+  }
+  private set from(value: string) {
+    this.props.from = value;
+  }
+
+  get to(): string {
+    return this.props.to;
+  }
+  private set to(value: string) {
+    this.props.to = value;
+  }
+
+  get distance(): number {
+    return this.props.distance;
+  }
+  private set distance(value: number) {
+    this.props.distance = value;
+  }
+
+  get current(): number {
+    return this.props.current;
+  }
+  private set current(value: number) {
+    this.props.current = value;
+  }
+
+  get thermic_current(): number {
+    return this.props.thermic_current;
+  }
+  private set thermic_current(value: number) {
+    this.props.thermic_current = value;
+  }
+
+  get build_id(): UniqueEntityId {
+    return this.props.build_id;
+  }
+}

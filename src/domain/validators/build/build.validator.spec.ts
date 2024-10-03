@@ -1,4 +1,4 @@
-import BuildValidatorFactory, { BuildValidator } from "./build.validator"
+import BuildValidatorFactory, { BuildValidator } from "./build.validator";
 
 describe("BuildValidator Tests", () => {
   let validator: BuildValidator;

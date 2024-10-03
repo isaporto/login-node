@@ -1,4 +1,4 @@
-import UserValidatorFactory, { UserValidator } from "./user.validator"
+import UserValidatorFactory, { UserValidator } from "./user.validator";
 
 describe("UserValidator Tests", () => {
   let validator: UserValidator;

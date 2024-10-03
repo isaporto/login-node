@@ -1,5 +1,5 @@
 import ValidatorFields from "../../../@shared/domain/validators/validator-fields";
-import { EnergyCompanyProperties } from "../entities/energy-company";
+import { EnergyCompanyProperties } from "../../entities/energy-company/energy-company";
 import { IsNotEmpty, IsString, IsNumber } from "class-validator";
 
 export default class EnergyCompanyValidatorFactory {

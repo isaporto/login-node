@@ -9,7 +9,6 @@ Section : number distance
 Section : number current
 Section : number thermic_current
 Section : reference Build
-Section : date created_at
 
 Section : create()
 Section : read()

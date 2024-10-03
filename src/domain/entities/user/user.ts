@@ -1,5 +1,5 @@
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
-import UserValidatorFactory from "../validators/user.validator";
+import UserValidatorFactory from "../../validators/user/user.validator";
 import Entity from "../../../@shared/domain/entities/entity";
 import EntityValidationError from "../../../@shared/domain/errors/validation.error";
 

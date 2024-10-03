@@ -1,6 +1,6 @@
 import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 import ValidatorFields from "../../../@shared/domain/validators/validator-fields";
-import { UserProperties } from "../entities/user";
+import { UserProperties } from "../../entities/user/user";
 
 export class UserRules {
   @IsString({ groups: ['update'] })

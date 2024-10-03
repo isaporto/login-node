@@ -1,6 +1,6 @@
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import Entity from "../../../@shared/domain/entities/entity";
-import EnergyCompanyValidatorFactory from "../validators/energy-company.validator";
+import EnergyCompanyValidatorFactory from "../../validators/energy-company/energy-company.validator";
 import EntityValidationError from "../../../@shared/domain/errors/validation.error";
 
 export type EnergyCompanyProperties = {
