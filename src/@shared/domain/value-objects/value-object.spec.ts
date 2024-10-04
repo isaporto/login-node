@@ -31,4 +31,26 @@ describe("ValueObject Tests Unit", () => {
 
     expect(stubVo.value.nested.prop3).toBeInstanceOf(Date)
   })
+
+  it("should convert to a string", () => {
+    const vo1 = new StubValueObject("string value");
+    expect(vo1 + "").toBe("string value");
+
+    const vo2 = new StubValueObject(0);
+    expect(vo2 + "").toBe("0");
+
+    const vo3 = new StubValueObject(true);
+    expect(vo3 + "").toBe("true");
+
+    const vo4 = new StubValueObject(false);
+    expect(vo4 + "").toBe("false");
+
+    const date = new Date();
+    const vo5 = new StubValueObject(date);
+    expect(vo5 + "").toBe(date.toString());
+
+    const obj = { param1: "value1" };
+    const vo6 = new StubValueObject(obj);
+    expect(vo6 + "").toBe(JSON.stringify(obj));
+  });
 })
