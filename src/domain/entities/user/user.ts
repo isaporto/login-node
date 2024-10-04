@@ -1,4 +1,3 @@
-import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import UserValidatorFactory from "../../validators/user/user.validator";
 import Entity from "../../../@shared/domain/entities/entity";
 import EntityValidationError from "../../../@shared/domain/errors/validation.error";
@@ -8,16 +7,9 @@ export type UserProperties = {
   lastName: string;
   email: string;
   password: string;
-  created_at?: Date;
 };
 
 export class User extends Entity<UserProperties> {
-  constructor(public readonly props: UserProperties, id?: UniqueEntityId) {
-    User.validate(props)
-    super(props, id);
-    this.props.created_at = this.props.created_at ?? new Date();
-  }
-
   get firstName(): string {
     return this.props.firstName;
   }
@@ -46,12 +38,8 @@ export class User extends Entity<UserProperties> {
     this.props.password = value;
   }
 
-  get created_at(): Date {
-    return this.props.created_at;
-  }
-
   update(firstName: string, lastName: string): void {
-    User.validateName({
+    this.validateName({
       firstName,
       lastName
     })
@@ -60,34 +48,34 @@ export class User extends Entity<UserProperties> {
   }
 
   updateEmail(email: string): void {
-    User.validateEmail({ email })
+    this.validateEmail({ email })
     this.email = email;
   }
 
   updatePassword(password: string): void {
-    User.validatePassword({ password })
+    this.validatePassword({ password })
     this.password = password;
   }
 
-  static validate(props: UserProperties) {
+  validate(props: UserProperties) {
     const validator = UserValidatorFactory.create();
     const isValid = validator.validate(props);
     if (!isValid) throw new EntityValidationError(validator.errors)
   }
 
-  static validateName(props: Pick<UserProperties, "firstName" | "lastName">) {
+  private validateName(props: Pick<UserProperties, "firstName" | "lastName">) {
     const validator = UserValidatorFactory.create();
     const isValid = validator.validateName(props);
     if (!isValid) throw new EntityValidationError(validator.errors)
   }
 
-  static validateEmail(props: Pick<UserProperties, "email">) {
+  private validateEmail(props: Pick<UserProperties, "email">) {
     const validator = UserValidatorFactory.create();
     const isValid = validator.validateEmail(props);
     if (!isValid) throw new EntityValidationError(validator.errors)
   }
 
-  static validatePassword(props: Pick<UserProperties, "password">) {
+  private validatePassword(props: Pick<UserProperties, "password">) {
     const validator = UserValidatorFactory.create();
     const isValid = validator.validatePassword(props);
     if (!isValid) throw new EntityValidationError(validator.errors)

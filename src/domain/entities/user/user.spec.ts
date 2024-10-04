@@ -1,6 +1,6 @@
-import { User, UserProperties } from "./user";
+import { User } from "./user";
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
-import { omit } from "lodash";
+import Entity from "../../../@shared/domain/entities/entity";
 
 describe("User Unit Tests", () => {
   const props = {
@@ -9,40 +9,27 @@ describe("User Unit Tests", () => {
     email: "johnny.bravo@turner.com",
     password: "iampretty"
   }
+  let spyValidate: jest.SpyInstance;
+  let user: User;
 
   beforeEach(() => {
-    User.validate = jest.fn();
+    spyValidate = jest.spyOn(User.prototype as any, 'validate');
+    spyValidate.mockImplementation(() => { });
+    user = new User({ props });
   })
 
   test("Constructor of User", () => {
-    let user = new User(props);
-    const propsDateOmitted = omit(user.props, "created_at");
-
-    expect(User.validate).toHaveBeenCalledTimes(1);
-    expect(propsDateOmitted).toStrictEqual({
+    expect(spyValidate).toHaveBeenCalledTimes(1);
+    expect(user["props"]).toStrictEqual({
       firstName: "Johnny",
       lastName: "Bravo",
       email: "johnny.bravo@turner.com",
       password: "iampretty"
     });
-    expect(user.props.created_at).toBeInstanceOf(Date);
-  });
-
-  test("id field", () => {
-    const userDatas: { id?: any; props: UserProperties }[] = [
-      { props },
-      { props, id: undefined },
-      { props, id: null },
-      { props, id: "" },
-      { props, id: new UniqueEntityId() },
-    ];
-    userDatas.forEach((userData) => {
-      const user = new User(userData.props, userData.id);
-      expect(user.id).not.toBeFalsy();
-      expect(user.uniqueEntityId).not.toBeFalsy();
-      expect(typeof user.id).toBe('string');
-      expect(user.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
-    });
+    expect(user.createdAt).toBeInstanceOf(Date);
+    expect(user.updatedAt).toBeInstanceOf(Date);
+    expect(user.uniqueEntityId).toBeInstanceOf(UniqueEntityId)
+    expect(user).toBeInstanceOf(Entity)
   });
 
   test("getter and setter of each non optional prop", () => {
@@ -52,7 +39,7 @@ describe("User Unit Tests", () => {
       { prop: 'email', firstValue: 'johnny.bravo@turner.com', newValue: 'billy@turner.com' },
       { prop: 'password', firstValue: 'iampretty', newValue: 'password' }
     ]
-    const user = new User(props);
+
     propsDatas.forEach(propData => {
       expect(user[propData.prop]).toBe(propData.firstValue);
       user[propData.prop] = propData.newValue
@@ -60,46 +47,31 @@ describe("User Unit Tests", () => {
     })
   });
 
-  test("getter of created_at prop", () => {
-    const created_at = new Date("12/12/2012");
-    let user = new User({
-      ...props,
-      created_at,
-    });
-    expect(user.created_at).toBe(created_at);
-
-    user = new User(props);
-    expect(user.created_at).toBeInstanceOf(Date);
-  });
-
   it("should update a user name", () => {
-    User.validateName = jest.fn();
-    const user = new User(props);
-    expect(User.validate).toHaveBeenCalledTimes(1);
+    const spyValidateName = jest.spyOn(User.prototype as any, 'validateName');
+    spyValidateName.mockImplementation(() => { });
 
     user.update("Eddy", "Skipper");
-    expect(User.validateName).toHaveBeenCalledTimes(1);
+    expect(spyValidateName).toHaveBeenCalledTimes(1);
     expect(user.firstName).toBe("Eddy")
     expect(user.lastName).toBe("Skipper")
   })
 
   it("should update a user email", () => {
-    User.validateEmail = jest.fn();
-    const user = new User(props);
-    expect(User.validate).toHaveBeenCalledTimes(1);
+    const spyValidateEmail = jest.spyOn(User.prototype as any, 'validateEmail');
+    spyValidateEmail.mockImplementation(() => { });
 
     user.updateEmail("johnny.handsome@turner.com");
-    expect(User.validateEmail).toHaveBeenCalledTimes(1);
+    expect(spyValidateEmail).toHaveBeenCalledTimes(1);
     expect(user.email).toBe("johnny.handsome@turner.com");
   })
 
   it("should update a user password", () => {
-    User.validatePassword = jest.fn();
-    const user = new User(props);
-    expect(User.validate).toHaveBeenCalledTimes(1);
+    const spyValidatePassword = jest.spyOn(User.prototype as any, 'validatePassword');
+    spyValidatePassword.mockImplementation(() => { });
 
     user.updatePassword("iamhandsome");
-    expect(User.validatePassword).toHaveBeenCalledTimes(1);
+    expect(spyValidatePassword).toHaveBeenCalledTimes(1);
     expect(user.password).toBe("iamhandsome");
   })
 });

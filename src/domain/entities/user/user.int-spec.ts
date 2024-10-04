@@ -28,7 +28,7 @@ describe("User Integration Tests", () => {
     errors: FieldsErrors
   ) {
     invalidValues.forEach((invalidValue) => {
-      expect(() => new User(invalidValue)).containsErrorMessages(errors);
+      expect(() => new User({ props: invalidValue })).containsErrorMessages(errors);
     });
   }
   describe("create method", () => {
@@ -82,25 +82,20 @@ describe("User Integration Tests", () => {
       assertCreateIsInvalid(invalidValues, messageErrors("password", ['MaxLength']));
     });
 
-    it("should be invalid User by its created_at", () => {
-      let invalidValues: any[] = formatPropertyValues("created_at", ["", true, false, 1])
-      assertCreateIsInvalid(invalidValues, messageErrors("created_at", ["IsDate"]));
-    })
-
     it("should be a valid User", () => {
-      expect(() => new User(
-        {
-          firstName: "Johnny",
-          lastName: "Bravo",
-          email: "johnny.bravo@turner.com",
-          password: "iampretty"
-        })).not.toThrow(EntityValidationError)
+      const props = {
+        firstName: "Johnny",
+        lastName: "Bravo",
+        email: "johnny.bravo@turner.com",
+        password: "iampretty"
+      }
+      expect(() => new User({ props })).not.toThrow(EntityValidationError)
     });
   });
 
   describe("update method", () => {
     const props = { firstName: "Courage", lastName: "the Cowardly Dog", email: "courage@gmail.com", password: "murielbagge" }
-    const user = new User(props)
+    const user = new User({ props })
 
     it("should be invalid User by its firstName", () => {
       let invalidValues: any[] = [null, undefined]

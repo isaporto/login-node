@@ -1,4 +1,4 @@
-import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
 import ValidatorFields from "../../../@shared/domain/validators/validator-fields";
 import { UserProperties } from "../../entities/user/user";
 
@@ -22,12 +22,8 @@ export class UserRules {
   @IsNotEmpty({ groups: ['updatePassword'] })
   password: string;
 
-  @IsDate()
-  @IsOptional()
-  created_at?: Date;
-
-  constructor({ firstName, lastName, email, password, created_at }: Partial<UserProperties>) {
-    Object.assign(this, { firstName, lastName, email, password, created_at });
+  constructor({ firstName, lastName, email, password }: Partial<UserProperties>) {
+    Object.assign(this, { firstName, lastName, email, password });
   }
 }
 

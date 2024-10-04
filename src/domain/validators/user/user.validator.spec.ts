@@ -27,7 +27,6 @@ describe("UserValidator Tests", () => {
       if (error === "IsEmail") messages.push(`${field} must be an email`)
       if (error === "MaxLength") messages.push(`${field} must be shorter than or equal to 64 characters`)
       if (error === "MinLength") messages.push(`${field} must be longer than or equal to 8 characters`)
-      if (error === "IsDate") messages.push(`${field} must be a Date instance`)
     })
     return messages;
   }
@@ -146,10 +145,5 @@ describe("UserValidator Tests", () => {
       invalidValues = [{ password: "a".repeat(65) }]
       assertPropertyInvalid("password", "validatePassword", invalidValues, messageErrors("password", ["MaxLength"]))
     })
-  })
-
-  test("Invalid cases for created_at", () => {
-    let invalidValues: any[] = formatPropertyValues("created_at", ["", true, false, 1])
-    assertPropertyInvalid("created_at", "validate", invalidValues, messageErrors("created_at", ["IsDate"]))
   })
 })
