@@ -9,7 +9,7 @@ export interface CreateEntityProps<Props> {
   updatedAt?: Date;
 }
 
-export abstract class Entity<EntityProps> {
+export abstract class Entity<EntityProps = any> {
   public readonly uniqueEntityId: UniqueEntityId;
   public readonly _createdAt: Date;
   public _updatedAt: Date;
@@ -37,6 +37,15 @@ export abstract class Entity<EntityProps> {
 
   get updatedAt(): Date {
     return this._updatedAt;
+  }
+
+  toJSON(): Required<{ id: string, createdAt: Date, updatedAt: Date } & EntityProps> {
+    return {
+      id: this.id,
+      ...this.props,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
+    } as Required<{ id: string, createdAt: Date, updatedAt: Date } & EntityProps>;
   }
 
   protected abstract validate(props: EntityProps): void;

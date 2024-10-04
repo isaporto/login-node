@@ -72,4 +72,14 @@ describe("Entity Unit Tests", () => {
     expect(entity.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
     expect(entity.id).toBe(uniqueEntityId.value);
   })
+
+  it("should convert id and props to JavaScript Object", () => {
+    const id = new UniqueEntityId("5490020a-e866-4229-9adc-aa44b83234c4");
+    const entity = new StubEntity({ props: { prop1: "prop1 value", prop2: true }, id });
+    expect(entity.toJSON()).toMatchObject({
+      id: "5490020a-e866-4229-9adc-aa44b83234c4",
+      prop1: "prop1 value",
+      prop2: true,
+    });
+  });
 });
