@@ -24,7 +24,7 @@ describe("EnergyCompany Integration Tests", () => {
     errors: FieldsErrors
   ) {
     invalidValues.forEach((invalidValue) => {
-      expect(() => new EnergyCompany(invalidValue)).containsErrorMessages(errors);
+      expect(() => new EnergyCompany({ props: invalidValue })).containsErrorMessages(errors);
     });
   }
 
@@ -64,13 +64,13 @@ describe("EnergyCompany Integration Tests", () => {
     })
 
     it("should be a valid EnergyCompany", () => {
-      expect(() => new EnergyCompany(
-        {
-          name: "Eletropaulo",
-          nominal_voltage: 1,
-          residential_percent: 2,
-          commercial_percent: 3
-        })).not.toThrow(EntityValidationError)
+      const props = {
+        name: "Eletropaulo",
+        nominal_voltage: 1,
+        residential_percent: 2,
+        commercial_percent: 3
+      }
+      expect(() => new EnergyCompany({ props })).not.toThrow(EntityValidationError)
     })
   })
 
@@ -81,7 +81,7 @@ describe("EnergyCompany Integration Tests", () => {
       residential_percent: 2,
       commercial_percent: 3
     }
-    const energyCompany = new EnergyCompany(props)
+    const energyCompany = new EnergyCompany({ props })
 
     it("should be invalid EnergyCompany by its name", () => {
       let invalidValues: any[] = [null, undefined]

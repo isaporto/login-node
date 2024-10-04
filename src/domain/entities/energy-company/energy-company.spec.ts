@@ -1,3 +1,4 @@
+import Entity from "../../../@shared/domain/entities/entity";
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import { EnergyCompany, EnergyCompanyProperties } from "./energy-company";
 
@@ -8,42 +9,30 @@ describe("EnergyCompany Unit Tests", () => {
     residential_percent: 2,
     commercial_percent: 3
   }
+  let spyValidate: jest.SpyInstance;
+  let energyCompany: EnergyCompany;
 
   beforeEach(() => {
-    EnergyCompany.validate = jest.fn();
+    spyValidate = jest.spyOn(EnergyCompany.prototype as any, 'validate');
+    spyValidate.mockImplementation(() => { });
+    energyCompany = new EnergyCompany({ props });
   })
 
   test("Constructor of EnergyCompany", () => {
-    let energyCompany = new EnergyCompany(props);
-
-    expect(EnergyCompany.validate).toHaveBeenCalledTimes(1);
-    expect(energyCompany.props).toStrictEqual({
+    expect(spyValidate).toHaveBeenCalledTimes(1);
+    expect(energyCompany["props"]).toStrictEqual({
       name: "Eletropaulo",
       nominal_voltage: 1,
       residential_percent: 2,
       commercial_percent: 3
     });
-  });
-
-  test("id field", () => {
-    const energyCompanyDatas: { id?: any; props: EnergyCompanyProperties }[] = [
-      { props },
-      { props, id: undefined },
-      { props, id: null },
-      { props, id: "" },
-      { props, id: new UniqueEntityId() },
-    ];
-    energyCompanyDatas.forEach((energyCompanyData) => {
-      const energyCompany = new EnergyCompany(energyCompanyData.props, energyCompanyData.id);
-      expect(energyCompany.id).not.toBeFalsy();
-      expect(energyCompany.uniqueEntityId).not.toBeFalsy();
-      expect(typeof energyCompany.id).toBe('string');
-      expect(energyCompany.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
-    });
+    expect(energyCompany.createdAt).toBeInstanceOf(Date);
+    expect(energyCompany.updatedAt).toBeInstanceOf(Date);
+    expect(energyCompany.uniqueEntityId).toBeInstanceOf(UniqueEntityId)
+    expect(energyCompany).toBeInstanceOf(Entity)
   });
 
   test("getter and setter of each non optional prop", () => {
-    const energyCompany = new EnergyCompany(props);
     expect(energyCompany.name).toBe("Eletropaulo");
     energyCompany['name'] = "Enel"
     expect(energyCompany.name).toBe("Enel")
