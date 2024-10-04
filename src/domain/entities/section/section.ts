@@ -1,5 +1,7 @@
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import Entity from "../../../@shared/domain/entities/entity";
+import SectionValidatorFactory from "../../validators/section/section.validator";
+import EntityValidationError from "../../../@shared/domain/errors/validation.error";
 
 export type SectionProperties = {
   order: number;
@@ -58,7 +60,9 @@ export class Section extends Entity<SectionProperties> {
     return this.props.build_id;
   }
 
-  validate() {
-    //
+  validate(props: SectionProperties) {
+    const validator = SectionValidatorFactory.create();
+    const isValid = validator.validate(props);
+    if (!isValid) throw new EntityValidationError(validator.errors)
   }
 }
