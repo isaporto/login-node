@@ -1,6 +1,6 @@
 import { Build, BuildProperties } from "./build";
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
-import { omit } from "lodash";
+import Entity from "../../../@shared/domain/entities/entity";
 
 describe("Build Unit Tests", () => {
   const energyCompanyId = new UniqueEntityId()
@@ -10,46 +10,33 @@ describe("Build Unit Tests", () => {
     building_type: "Residential",
     energy_company_id: energyCompanyId
   }
+  let spyValidate: jest.SpyInstance;
+  let build: Build;
 
   beforeEach(() => {
-    Build.validate = jest.fn();
+    spyValidate = jest.spyOn(Build.prototype as any, 'validate');
+    spyValidate.mockImplementation(() => { });
+    build = new Build({ props });
   })
 
   test("Constructor of Build", () => {
-    let build = new Build(props);
-    const propsDateOmitted = omit(build.props, "created_at");
-
-    expect(Build.validate).toHaveBeenCalledTimes(1);
-    expect(propsDateOmitted).toStrictEqual({
+    expect(spyValidate).toHaveBeenCalledTimes(1);
+    expect(build["props"]).toStrictEqual({
       name: "Build project",
       model: "FMAX",
       building_type: "Residential",
       energy_company_id: energyCompanyId
     });
-    expect(build.props.created_at).toBeInstanceOf(Date);
-  });
-
-  test("id field", () => {
-    const buildDatas: { id?: any; props: BuildProperties }[] = [
-      { props },
-      { props, id: undefined },
-      { props, id: null },
-      { props, id: "" },
-      { props, id: new UniqueEntityId() },
-    ];
-    buildDatas.forEach((buildData) => {
-      const build = new Build(buildData.props, buildData.id);
-      expect(build.id).not.toBeFalsy();
-      expect(build.uniqueEntityId).not.toBeFalsy();
-      expect(typeof build.id).toBe('string');
-      expect(build.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
-    });
+    expect(build.createdAt).toBeInstanceOf(Date);
+    expect(build.updatedAt).toBeInstanceOf(Date);
+    expect(build.uniqueEntityId).toBeInstanceOf(UniqueEntityId)
+    expect(build).toBeInstanceOf(Entity)
   });
 
   test("getter and setter of each non optional prop", () => {
     const newEnergyCompanyId = new UniqueEntityId()
 
-    const build = new Build(props);
+    const build = new Build({ props });
     expect(build.name).toBe("Build project");
     build['name'] = "New build name"
     expect(build.name).toBe("New build name")
@@ -65,17 +52,5 @@ describe("Build Unit Tests", () => {
     expect(build.energy_company_id).toBe(energyCompanyId);
     build['energy_company_id'] = newEnergyCompanyId
     expect(build.energy_company_id).toBe(newEnergyCompanyId)
-  });
-
-  test("getter of created_at prop", () => {
-    const created_at = new Date("12/12/2012");
-    let build = new Build({
-      ...props,
-      created_at,
-    });
-    expect(build.created_at).toBe(created_at);
-
-    build = new Build(props);
-    expect(build.created_at).toBeInstanceOf(Date);
   });
 });

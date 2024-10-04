@@ -27,7 +27,7 @@ describe("Build Integration Tests", () => {
     errors: FieldsErrors
   ) {
     invalidValues.forEach((invalidValue) => {
-      expect(() => new Build(invalidValue)).containsErrorMessages(errors);
+      expect(() => new Build({ props: invalidValue })).containsErrorMessages(errors);
     });
   }
 
@@ -80,13 +80,13 @@ describe("Build Integration Tests", () => {
     })
 
     it("should be a valid Build", () => {
-      expect(() => new Build(
-        {
-          name: "Build project",
-          model: "FMAX",
-          building_type: "Residential",
-          energy_company_id: new UniqueEntityId()
-        })).not.toThrow(EntityValidationError)
+      const props: BuildProperties = {
+        name: "Build project",
+        model: "FMAX",
+        building_type: "Residential",
+        energy_company_id: new UniqueEntityId()
+      }
+      expect(() => new Build({ props })).not.toThrow(EntityValidationError)
     })
   })
 
@@ -98,7 +98,7 @@ describe("Build Integration Tests", () => {
       building_type: "Residential",
       energy_company_id: energyCompanyId
     }
-    const build = new Build(props)
+    const build = new Build({ props })
 
     it("should be invalid Build by its name", () => {
       let invalidValues: any[] = [null, undefined]

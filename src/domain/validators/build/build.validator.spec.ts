@@ -78,9 +78,4 @@ describe("BuildValidator Tests", () => {
     invalidValues = formatPropertyValues("energy_company_id", [1, true, false, {}, []])
     assertPropertyInvalid("energy_company_id", invalidValues, messageErrors("energy_company_id", ["IsInstance"]))
   })
-
-  test("Invalid cases for created_at", () => {
-    let invalidValues: any[] = formatPropertyValues("created_at", ["", true, false, 1])
-    assertPropertyInvalid("created_at", invalidValues, messageErrors("created_at", ["IsDate"]))
-  })
 })

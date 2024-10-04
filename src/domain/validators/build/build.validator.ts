@@ -31,12 +31,8 @@ export class BuildRules {
   @IsNotEmpty()
   energy_company_id: UniqueEntityId;
 
-  @IsDate()
-  @IsOptional()
-  created_at?: Date;
-
-  constructor({ name, model, building_type, energy_company_id, created_at }: BuildProperties ) {
-    Object.assign(this, { name, model, building_type, energy_company_id, created_at });
+  constructor({ name, model, building_type, energy_company_id }: BuildProperties ) {
+    Object.assign(this, { name, model, building_type, energy_company_id });
   }
 }
 
