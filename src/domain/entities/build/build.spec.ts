@@ -53,4 +53,14 @@ describe("Build Unit Tests", () => {
     build['energy_company_id'] = newEnergyCompanyId
     expect(build.energy_company_id).toBe(newEnergyCompanyId)
   });
+
+  it("should update Build", () => {
+    const newUuid = new UniqueEntityId();
+    build.update("New Build name", "CMAX", "Commercial", newUuid);
+    expect(spyValidate).toHaveBeenCalledTimes(2);
+    expect(build.name).toBe("New Build name");
+    expect(build.model).toBe("CMAX");
+    expect(build.building_type).toBe("Commercial");
+    expect(build.energy_company_id).toBe(newUuid);
+  })
 });
