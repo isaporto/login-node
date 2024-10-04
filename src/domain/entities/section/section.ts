@@ -12,10 +12,6 @@ export type SectionProperties = {
 }
 
 export class Section extends Entity<SectionProperties> {
-  constructor(public readonly props: SectionProperties, id?: UniqueEntityId) {
-    super(props, id);
-  }
-
   get order(): number {
     return this.props.order;
   }
@@ -60,5 +56,9 @@ export class Section extends Entity<SectionProperties> {
 
   get build_id(): UniqueEntityId {
     return this.props.build_id;
+  }
+
+  validate() {
+    //
   }
 }

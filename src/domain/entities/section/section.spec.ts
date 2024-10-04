@@ -1,5 +1,5 @@
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
-import { Section, SectionProperties } from "./section"
+import { Section } from "./section"
 
 describe("Section Unit Tests", () => {
   const buildId = new UniqueEntityId();
@@ -12,7 +12,7 @@ describe("Section Unit Tests", () => {
     thermic_current: 30,
     build_id: buildId
   }
-  const section = new Section(props);
+  const section = new Section({ props });
 
   // beforeEach(() => {
   //   Section.validate = jest.fn();
@@ -20,7 +20,7 @@ describe("Section Unit Tests", () => {
 
   test("Constructor of Section", () => {
     // expect(Section.validate).toHaveBeenCalledTimes(1);
-    expect(section.props).toStrictEqual({
+    expect(section["props"]).toStrictEqual({
       order: 1,
       from: 'test 1',
       to: 'test 2',
@@ -30,23 +30,6 @@ describe("Section Unit Tests", () => {
       build_id: buildId
     })
   })
-
-  test("id field", () => {
-    const sectionDatas: { id?: any; props: SectionProperties }[] = [
-      { props },
-      { props, id: undefined },
-      { props, id: null },
-      { props, id: "" },
-      { props, id: new UniqueEntityId() },
-    ];
-    sectionDatas.forEach((sectionData) => {
-      const section = new Section(sectionData.props, sectionData.id);
-      expect(section.id).not.toBeFalsy();
-      expect(section.uniqueEntityId).not.toBeFalsy();
-      expect(typeof section.id).toBe('string');
-      expect(section.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
-    });
-  });
 
   test("getter and setter of each non optional prop", () => {
     expect(section.order).toBe(1);

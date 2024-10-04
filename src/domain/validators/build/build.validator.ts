@@ -2,7 +2,7 @@ import { BuildingType, Model } from "../../../@shared/domain/types";
 import UniqueEntityId from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 import ValidatorFields from "../../../@shared/domain/validators/validator-fields";
 import { BuildProperties } from "../../entities/build/build";
-import { IsDate, IsNotEmpty, IsOptional, IsString, IsIn, IsInstance } from "class-validator";
+import { IsNotEmpty, IsString, IsIn, IsInstance } from "class-validator";
 
 export default class BuildValidatorFactory {
   static create() {
