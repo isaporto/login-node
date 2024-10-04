@@ -12,8 +12,15 @@ export type SectionProperties = {
 }
 
 export class Section extends Entity<SectionProperties> {
-  constructor(public readonly props: SectionProperties, id: UniqueEntityId) {
+  constructor(public readonly props: SectionProperties, id?: UniqueEntityId) {
     super(props, id);
+  }
+
+  get order(): number {
+    return this.props.order;
+  }
+  private set order(value: number) {
+    this.props.order = value;
   }
 
   get from(): string {
