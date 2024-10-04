@@ -49,4 +49,13 @@ describe("EnergyCompany Unit Tests", () => {
     energyCompany['commercial_percent'] = 6
     expect(energyCompany.commercial_percent).toBe(6)
   });
+
+  it("should update energyCompany", () => {
+    energyCompany.update("Enel", 4, 5, 6);
+    expect(spyValidate).toHaveBeenCalledTimes(2);
+    expect(energyCompany.name).toBe("Enel");
+    expect(energyCompany.nominal_voltage).toBe(4);
+    expect(energyCompany.residential_percent).toBe(5);
+    expect(energyCompany.commercial_percent).toBe(6);
+  })
 });
