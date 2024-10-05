@@ -1,13 +1,11 @@
 import { UserOutput } from "../dtos/user-output.dto";
-import { User } from "../../domain/entities/user/user";
 import UserRepository from "../../domain/repositories/user.repository";
 
-export default class CreateUserUseCase {
+export default class GetUserUseCase {
   constructor(private userRepo: UserRepository) { }
 
   async execute(input: Input): Promise<Output> {
-    const entity = new User({ props: input });
-    await this.userRepo.insert(entity)
+    const entity = await this.userRepo.findById(input.id);
     const { id, firstName, lastName, email, createdAt, updatedAt } = entity;
     return {
       id, firstName, lastName, email, createdAt, updatedAt
@@ -16,10 +14,7 @@ export default class CreateUserUseCase {
 }
 
 export type Input = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
+  id: string;
+};
 
 export type Output = UserOutput;
