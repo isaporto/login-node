@@ -1,8 +1,9 @@
 import { UserOutput } from "../dtos/user-output.dto";
 import { User } from "../../domain/entities/user/user";
 import UserRepository from "../../domain/repositories/user.repository";
+import UseCase from "../../@shared/application/use-case";
 
-export default class CreateUserUseCase {
+export default class CreateUserUseCase implements UseCase<Input, Output> {
   constructor(private userRepo: UserRepository) { }
 
   async execute(input: Input): Promise<Output> {
