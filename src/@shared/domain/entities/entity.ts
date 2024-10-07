@@ -13,7 +13,7 @@ export abstract class Entity<EntityProps = any> {
   public readonly uniqueEntityId: UniqueEntityId;
   public readonly _createdAt: Date;
   public _updatedAt: Date;
-  protected readonly props: EntityProps;
+  public readonly props: EntityProps;
 
   constructor({
     props, id, createdAt, updatedAt
