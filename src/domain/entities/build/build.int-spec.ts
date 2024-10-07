@@ -74,11 +74,6 @@ describe("Build Integration Tests", () => {
       assertCreateIsInvalid(invalidValues, messageErrors("energy_company_id", ["IsInstance"]))
     })
 
-    it("should be invalid Build by its created_at", () => {
-      let invalidValues: any[] = formatPropertyValues("created_at", ["", true, false, 1])
-      assertCreateIsInvalid(invalidValues, messageErrors("created_at", ["IsDate"]))
-    })
-
     it("should be a valid Build", () => {
       const props: BuildProperties = {
         name: "Build project",

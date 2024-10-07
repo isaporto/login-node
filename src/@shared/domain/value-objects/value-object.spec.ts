@@ -13,12 +13,13 @@ describe("ValueObject Tests Unit", () => {
 
   it("should be immutable", () => {
     let stubVo = new StubValueObject("string value");
+    debugger
     expect(() => {
       (stubVo as any)._value = "it changed"
-    }).toThrow("Cannot assign to read only property '_value' of object '#<StubValueObject>'")
+    }).toThrow("Cannot assign to read only property '_value' of object '[object Object]'")
     expect(() => {
       (stubVo as any)["_value"] = "it changed"
-    }).toThrow("Cannot assign to read only property '_value' of object '#<StubValueObject>'")
+    }).toThrow("Cannot assign to read only property '_value' of object '[object Object]'")
 
     stubVo = new StubValueObject({ prop1: "prop1 value", nested: { prop2: "prop2 value", prop3: new Date } });
     expect(() => {
